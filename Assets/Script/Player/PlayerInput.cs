@@ -9,13 +9,25 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] private KeyCode m_LeftKey = KeyCode.A;
     [SerializeField] private KeyCode m_RightKey = KeyCode.D;
 
+    [Header("ActionKey")]
+    [Tooltip("Use Space Key to action")]
+    [SerializeField] private KeyCode m_ActionKey = KeyCode.Space;
+
     private Vector3 m_InputVector;
     private float m_XInput;
     private float m_YInput;
     private float m_ZInput;
 
+    private bool m_ActionFlag;
+
     // プロパティ
     public Vector3 InputVector => m_InputVector;
+    public bool ActionFlag => m_ActionFlag;
+
+    private void Awake()
+    {
+        m_ActionFlag = true;
+    }
 
     // Update is called once per frame
     private void Update()
@@ -46,5 +58,11 @@ public class PlayerInput : MonoBehaviour
             m_XInput--;
         }
         m_InputVector = new Vector3(m_XInput, m_YInput, m_ZInput);
+
+        // アクション
+        if (Input.GetKeyDown(m_ActionKey))
+        {
+            m_ActionFlag = !m_ActionFlag;
+        }
     }
 }
